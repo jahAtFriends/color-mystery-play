@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 import { Card } from '@/components/ui/card';
 
 interface RGBColor {
@@ -30,21 +30,27 @@ const RGBColorDemo = () => {
     { r: 75, g: 0, b: 130 },    // Indigo
   ];
 
-  const handleSliderChange = (component: 'r' | 'g' | 'b', value: number) => {
+  const handleSliderChange = useCallback((component: 'r' | 'g' | 'b', value: number) => {
     setColor(prev => ({ ...prev, [component]: value }));
-  };
+  }, []);
 
-  const handleSwatchClick = (swatchColor: RGBColor) => {
+  const handleSwatchClick = useCallback((swatchColor: RGBColor) => {
     setColor(swatchColor);
-  };
+  }, []);
 
-  const getCurrentColorStyle = () => ({
+  const currentColorStyle = useMemo(() => ({
     backgroundColor: `rgb(${color.r}, ${color.g}, ${color.b})`
-  });
+  }), [color.r, color.g, color.b]);
 
-  const getSwatchStyle = (swatchColor: RGBColor) => ({
+  const sliderBackgrounds = useMemo(() => ({
+    red: `linear-gradient(to right, rgb(0, ${color.g}, ${color.b}), rgb(255, ${color.g}, ${color.b}))`,
+    green: `linear-gradient(to right, rgb(${color.r}, 0, ${color.b}), rgb(${color.r}, 255, ${color.b}))`,
+    blue: `linear-gradient(to right, rgb(${color.r}, ${color.g}, 0), rgb(${color.r}, ${color.g}, 255))`
+  }), [color.r, color.g, color.b]);
+
+  const getSwatchStyle = useCallback((swatchColor: RGBColor) => ({
     backgroundColor: `rgb(${swatchColor.r}, ${swatchColor.g}, ${swatchColor.b})`
-  });
+  }), []);
 
   return (
     <div className="min-h-screen bg-background p-6">
@@ -53,7 +59,7 @@ const RGBColorDemo = () => {
         <div className="text-center">
           <div 
             className="color-display w-full h-64 mb-4"
-            style={getCurrentColorStyle()}
+            style={currentColorStyle}
           />
           <div className="bg-values-bg border border-values-border rounded-lg px-6 py-3 inline-block">
             <span className="text-lg font-mono text-foreground">
@@ -75,7 +81,7 @@ const RGBColorDemo = () => {
                 onInput={(e) => handleSliderChange('r', parseInt((e.target as HTMLInputElement).value))}
                 className="rgb-slider w-full"
                 style={{
-                  background: `linear-gradient(to right, rgb(0, ${color.g}, ${color.b}), rgb(255, ${color.g}, ${color.b}))`
+                  background: sliderBackgrounds.red
                 }}
               />
             </div>
@@ -90,7 +96,7 @@ const RGBColorDemo = () => {
                 onInput={(e) => handleSliderChange('g', parseInt((e.target as HTMLInputElement).value))}
                 className="rgb-slider w-full"
                 style={{
-                  background: `linear-gradient(to right, rgb(${color.r}, 0, ${color.b}), rgb(${color.r}, 255, ${color.b}))`
+                  background: sliderBackgrounds.green
                 }}
               />
             </div>
@@ -105,7 +111,7 @@ const RGBColorDemo = () => {
                 onInput={(e) => handleSliderChange('b', parseInt((e.target as HTMLInputElement).value))}
                 className="rgb-slider w-full"
                 style={{
-                  background: `linear-gradient(to right, rgb(${color.r}, ${color.g}, 0), rgb(${color.r}, ${color.g}, 255))`
+                  background: sliderBackgrounds.blue
                 }}
               />
             </div>

@@ -52,14 +52,13 @@ const RGBColorDemo = () => {
         {/* Main Color Display */}
         <div className="text-center">
           <div 
-            className="color-display w-full h-64 mb-6 flex items-center justify-center"
+            className="color-display w-full h-64 mb-4"
             style={getCurrentColorStyle()}
-          >
-            <div className="bg-values-bg border border-values-border rounded-lg px-4 py-2">
-              <span className="text-sm font-mono text-foreground">
-                RGB({color.r}, {color.g}, {color.b})
-              </span>
-            </div>
+          />
+          <div className="bg-values-bg border border-values-border rounded-lg px-6 py-3 inline-block">
+            <span className="text-lg font-mono text-foreground">
+              ({color.r}, {color.g}, {color.b})
+            </span>
           </div>
         </div>
 

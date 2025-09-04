@@ -72,7 +72,7 @@ const RGBColorDemo = () => {
                 min="0"
                 max="255"
                 value={color.r}
-                onChange={(e) => handleSliderChange('r', parseInt(e.target.value))}
+                onInput={(e) => handleSliderChange('r', parseInt((e.target as HTMLInputElement).value))}
                 className="rgb-slider w-full"
                 style={{
                   background: `linear-gradient(to right, rgb(0, ${color.g}, ${color.b}), rgb(255, ${color.g}, ${color.b}))`
@@ -87,7 +87,7 @@ const RGBColorDemo = () => {
                 min="0"
                 max="255"
                 value={color.g}
-                onChange={(e) => handleSliderChange('g', parseInt(e.target.value))}
+                onInput={(e) => handleSliderChange('g', parseInt((e.target as HTMLInputElement).value))}
                 className="rgb-slider w-full"
                 style={{
                   background: `linear-gradient(to right, rgb(${color.r}, 0, ${color.b}), rgb(${color.r}, 255, ${color.b}))`
@@ -102,7 +102,7 @@ const RGBColorDemo = () => {
                 min="0"
                 max="255"
                 value={color.b}
-                onChange={(e) => handleSliderChange('b', parseInt(e.target.value))}
+                onInput={(e) => handleSliderChange('b', parseInt((e.target as HTMLInputElement).value))}
                 className="rgb-slider w-full"
                 style={{
                   background: `linear-gradient(to right, rgb(${color.r}, ${color.g}, 0), rgb(${color.r}, ${color.g}, 255))`
